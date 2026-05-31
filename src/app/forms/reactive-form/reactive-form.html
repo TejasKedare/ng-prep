@@ -1,1 +1,30 @@
-<p>reactive-form works!</p>
+<p class="text-2xl">Reactive Forms</p>
+
+<form (ngSubmit)="submitForm()" [formGroup]="userForm" >
+    <div>
+        <input type="text" placeholder="Name" formControlName="name">
+        @if(userForm.get('name')?.touched && userForm.get('name')?.hasError('required')) {
+            <small class="text-red-400">Invalid name</small>
+        }
+    </div>
+
+    <div>
+        <input type="text" placeholder="email" formControlName="email">
+        @if(userForm.get('email')?.touched && (userForm.get('email')?.hasError('email') || userForm.get('email')?.hasError('required'))) {
+            <small class="text-red-400">Invalid Email</small>
+        }
+    </div>
+
+    <div>
+        <input type="text" placeholder="age" formControlName="age">
+        @if(userForm.get('age')?.touched && userForm.get('age')?.hasError('required')) {
+            <small class="text-red-400">Invalid age</small>
+        }
+    </div>
+
+    <div class="flex gap-6">
+        <button class="cursor-pointer" type="submit">Submit</button>
+        <button class="cursor-pointer" (click)="loadData()">loadData</button>
+    </div>
+
+</form>
