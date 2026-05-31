@@ -1,0 +1,21 @@
+.chess-container {
+    width: fit-content;
+    border: 1px solid;
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 20px;
+    height: 20px;
+}
+
+.white {
+    background: white;
+}
+
+.black {
+    background: black;
+}
