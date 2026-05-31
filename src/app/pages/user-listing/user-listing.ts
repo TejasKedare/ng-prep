@@ -11,7 +11,7 @@ interface User {
 
 @Component({
   selector: 'app-user-listing',
-  imports: [JsonPipe],
+  imports: [],
   standalone: true,
   templateUrl: './user-listing.html',
   styleUrl: './user-listing.scss',
