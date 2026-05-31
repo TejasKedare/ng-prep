@@ -22,6 +22,11 @@
         }
     </div>
 
+    <div class="flex gap-2">
+        <label for="isEmployee">Is user an Employee</label>
+        <input type="checkbox" name="isEmployee" id="isEmployee" formControlName="isEmployee">
+    </div>
+
     <div class="flex gap-6">
         <button class="cursor-pointer" type="submit">Submit</button>
         <button class="cursor-pointer" (click)="loadData()">loadData</button>

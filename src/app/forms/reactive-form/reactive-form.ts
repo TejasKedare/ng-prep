@@ -9,10 +9,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './reactive-form.scss',
 })
 export class ReactiveForm implements OnInit {
-  
+
   userForm!: FormGroup
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit() {
     this.initializeForm()
@@ -21,14 +21,15 @@ export class ReactiveForm implements OnInit {
   initializeForm() {
     this.userForm = this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required,Validators.email]],
-      age:['', [Validators.required, Validators.min(18)]]
+      email: ['', [Validators.required, Validators.email]],
+      age: ['', [Validators.required, Validators.min(18)]],
+      isEmployee: [false]
     })
   }
 
   loadData() {
     this.userForm.patchValue({
-      name:'Tejas',
+      name: 'Tejas',
       age: 29
     })
   }
@@ -41,6 +42,32 @@ export class ReactiveForm implements OnInit {
     }
 
     console.log(this.userForm.value);
-    
   }
+
+  addValidators() {
+    let name = this.userForm.get('name')
+    name?.addValidators([Validators.minLength(3)]) // keep the existing validators and update
+    name?.setValidators([Validators.minLength(3)]) // remove the existing validators and update
+    name?.removeValidators([Validators.required]); // this is to remove specific validator
+    name?.clearValidators(); // this is to clear all validators
+
+    name?.updateValueAndValidity() // this is required in all update and delete part to refresh validators
+  }
+
+  dynamicValidation() {
+    this.userForm.get('isEmployee')?.valueChanges.subscribe((value) => {
+      const age = this.userForm.get('age')
+      if (value) {
+        console.log('in if');
+        age?.setValidators([Validators.max(99)])
+        //  age?.markAllAsTouched()
+      } else {
+        console.log('in else');
+        age?.clearValidators();
+      }
+      age?.updateValueAndValidity()
+
+    })
+  }
+
 } 
