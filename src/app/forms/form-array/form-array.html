@@ -1,1 +1,18 @@
-<p>form-array works!</p>
+<p class="text-2xl">Form Array</p>
+
+<form (ngSubmit)="submitSkillForm()" [formGroup]="skillsForm">
+    <div formArrayName="skills">
+        @for (skill of skills.controls; track $index) {
+            <input type="text" placeholder="Add Skill" [formControlName]="$index">
+            @if (skill.touched && skills.hasError('required')) {
+                <span>Skill is Required</span>
+            }
+
+            <button (click)="removeSkills($index)" class="bg-red-400">Remove Skill</button>
+        }
+    </div>
+    <div class="flex gap-5">
+        <button (click)="addSkills()">Add Skill</button>
+        <button (click)="submitSkillForm()">Submit</button>
+    </div>
+</form>

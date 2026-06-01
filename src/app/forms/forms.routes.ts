@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { Forms } from "./forms";
 import { ReactiveForm } from "./reactive-form/reactive-form";
-import { FormArray } from "./form-array/form-array";
+import { FormArrayPrep } from "./form-array/form-array";
 
 export const FORM_ROUTES: Routes = [{
     path: '',
@@ -13,7 +13,7 @@ export const FORM_ROUTES: Routes = [{
         },
         {
             path: 'form-array',
-            component: FormArray
+            component: FormArrayPrep
         }
     ]
 }]
