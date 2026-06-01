@@ -58,11 +58,9 @@ export class ReactiveForm implements OnInit {
     this.userForm.get('isEmployee')?.valueChanges.subscribe((value) => {
       const age = this.userForm.get('age')
       if (value) {
-        console.log('in if');
         age?.setValidators([Validators.max(99)])
         //  age?.markAllAsTouched()
       } else {
-        console.log('in else');
         age?.clearValidators();
       }
       age?.updateValueAndValidity()
