@@ -12,7 +12,7 @@ export const authInterceptor : HttpInterceptorFn = (req, next) => {
     }
   })
 
-  return next(req).pipe(
+  return next(modifiedRequest).pipe(
     catchError(
       (error) => {
         if (error.status == 401) {

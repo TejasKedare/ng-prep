@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../../service/api';
-import { AsyncPipe, JsonPipe } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface User {
   id: number,
@@ -17,7 +17,10 @@ interface User {
   styleUrl: './user-listing.scss',
 })
 export class UserListing implements OnInit {
-  constructor(private apiService: ApiService) {
+  constructor(
+    private apiService: ApiService,
+    private router: Router
+  ) {
   }
 
   userData: User[] = []
@@ -27,6 +30,15 @@ export class UserListing implements OnInit {
   ngOnInit(): void {
     this.getUserList()
   }
+
+  goToDetails(user: any) {
+this.router.navigate(['/details', user.id], {
+  queryParams: {
+    name: user.name,
+    phone: user.phone
+  }
+})
+}
 
   getUserList() {
     this.apiService.get('https://jsonplaceholder.typicode.com/users').subscribe({

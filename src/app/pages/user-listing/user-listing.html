@@ -9,7 +9,7 @@
 
   <tbody>
     @for (user of userData; track user.id) {
-      <tr>
+      <tr (click)="goToDetails(user)">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
         <td>{{ user.email }}</td>
@@ -20,7 +20,7 @@
 </table>
 
 
-
+<!-- 
 <div class="chess-container">
   @for(row of arr; let r = $index; track $index) {
     <div class="row">
@@ -34,4 +34,4 @@
       }
     </div>
   }
-</div>
+</div> -->
