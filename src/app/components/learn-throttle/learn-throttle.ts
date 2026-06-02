@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { fromEvent, throttleTime } from 'rxjs';
 
 @Component({
@@ -8,14 +8,20 @@ import { fromEvent, throttleTime } from 'rxjs';
   styleUrl: './learn-throttle.scss',
 })
 
-export class LearnThrottle implements OnInit {
+export class LearnThrottle implements AfterViewInit  {
 
-  ngOnInit(): void {
-    const btn = document.getElementById('btn') as HTMLButtonElement
-    fromEvent(btn, 'click').pipe(
-      throttleTime(500)
+  @ViewChild('btn') btn! : ElementRef<HTMLButtonElement>
+
+  ngAfterViewInit() {
+    fromEvent(this.btn.nativeElement, 'click').pipe(
+      throttleTime(500,undefined, {
+        leading: true, // emit first click immediately of spam clicks
+        trailing: true // emit last click of spam clicks it is false by default
+      })
     ).subscribe(() => {
-      console.log('button clicked')
+      console.log('Button is been clicked');
+      
     })
   }
+
 }
