@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 
@@ -9,18 +9,22 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   templateUrl: './learn-debounce.html',
   styleUrl: './learn-debounce.scss',
 })
+
 export class LearnDebounce implements AfterViewInit {
 
   searchControl = new FormControl('')
 
+  constructor() { }
+
   ngAfterViewInit(): void {
+
     this.searchControl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged()
-    ).subscribe(value => {
+    ).subscribe((value) => {
       console.log(value);
       
     })
-  }
 
+  }
 }
