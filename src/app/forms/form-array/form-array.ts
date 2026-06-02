@@ -1,10 +1,10 @@
-import { Component, OnInit, } from '@angular/core';
+import { NgClass } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-form-array',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgClass],
   templateUrl: './form-array.html',
   styleUrl: './form-array.scss',
 })
@@ -16,8 +16,8 @@ export class FormArrayPrep implements OnInit {
     this.initializeForm()
   }
 
-  ngOnInit() {
-    
+  ngOnInit(): void {
+
   }
 
   initializeForm() {
@@ -27,7 +27,7 @@ export class FormArrayPrep implements OnInit {
   }
 
   createSkill() {
-    return this.fb.control('', [Validators.required])
+    return this.fb.control('', Validators.required)
   }
 
   get skills(): FormArray {
@@ -35,7 +35,7 @@ export class FormArrayPrep implements OnInit {
   }
 
   addSkills() {
-    this.skills?.push(this.createSkill())
+    this.skills.push(this.createSkill())
   }
 
   removeSkills(index: number) {
@@ -43,15 +43,31 @@ export class FormArrayPrep implements OnInit {
   }
 
   updateSkills(index: number) {
-    this.skills.at(index).setValue("Angular")
+    this.skills.at(index).setValue('Angular')
   }
 
-  submitSkillForm() {
-    if (!this.skillsForm.valid) {
+  submitForm() {
+    if (this.skillsForm.invalid) {
       this.skillsForm.markAllAsTouched()
+      console.log("Error while submitting the form : ", this.findErrorFields())
       return
     }
 
-    console.log(this.skillsForm.value)
+    console.log('Sill Form : ', this.skillsForm.value)
+  }
+
+  findErrorFields() {
+    let invalidFields = []
+    const control = this.skills.controls
+    for( let name in control) {
+      if (control[name].invalid) {
+        invalidFields.push({
+          name: name,
+          errors: control[name].errors
+        })
+      }
+    }
+
+    return invalidFields
   }
 }

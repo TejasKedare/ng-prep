@@ -1,18 +1,20 @@
 <p class="text-2xl">Form Array</p>
 
-<form (ngSubmit)="submitSkillForm()" [formGroup]="skillsForm">
+<form [formGroup]="skillsForm" (ngSubmit)="submitForm()">
     <div formArrayName="skills">
-        @for (skill of skills.controls; track $index) {
-            <input type="text" placeholder="Add Skill" [formControlName]="$index">
-            @if (skill.touched && skills.hasError('required')) {
-                <span>Skill is Required</span>
+        @for( skill of skills.controls; track $index ) {
+            <div class="p-4 flex gap-4">
+                <input class="p-2 border-b-2 outline-none" type="text" placeholder="Add Skill" [formControlName]="$index">
+                <button type="button" [ngClass]="{'opacity-50 pointer-events-none bg-grey-500': skills.controls.length <= 1}" class="p-2 text-sm rounded bg-red-400 text-white" (click)="removeSkills($index)">Remove</button>
+            </div>
+            @if(skill.touched && skill.hasError('required')) {
+                <small class="text-red-500 p-4">Please Enter Skills</small>
             }
-
-            <button (click)="removeSkills($index)" class="bg-red-400">Remove Skill</button>
         }
-    </div>
-    <div class="flex gap-5">
-        <button (click)="addSkills()">Add Skill</button>
-        <button (click)="submitSkillForm()">Submit</button>
+
+        <div class="p-4 flex gap-5">
+            <button type="button" class="p-2 text-sm rounded bg-blue-400 text-white" (click)="addSkills()">Add Skill</button>
+            <button class="p-2 text-sm rounded bg-green-400 text-white" type="submit">Submit</button>
+        </div>
     </div>
 </form>
