@@ -1,35 +1,34 @@
-<p class="text-2xl">Reactive Forms</p>
+<p class="text-2xl">Reactive Form</p>
 
-<form (ngSubmit)="submitForm()" [formGroup]="userForm" >
+<form (ngSubmit)="submitForm()" [formGroup]="userForm">
     <div>
         <input type="text" placeholder="Name" formControlName="name">
         @if(userForm.get('name')?.touched && userForm.get('name')?.hasError('required')) {
-            <small class="text-red-400">Invalid name</small>
+            <small class="text-red-400"> Name is required</small>
         }
     </div>
-
     <div>
-        <input type="text" placeholder="email" formControlName="email">
-        @if(userForm.get('email')?.touched && (userForm.get('email')?.hasError('email') || userForm.get('email')?.hasError('required'))) {
-            <small class="text-red-400">Invalid Email</small>
+        <input type="text" placeholder="Email" formControlName="email">
+        @if(userForm.get('email')?.touched && userForm.get('email')?.hasError('email')) {
+            <small class="text-red-400"> Please enter valid email</small>
+        }
+         @if(userForm.get('email')?.touched && userForm.get('email')?.hasError('required')) {
+            <small class="text-red-400"> Email is required</small>
         }
     </div>
-
     <div>
-        <input type="text" placeholder="age" formControlName="age">
-        @if(userForm.get('age')?.touched && userForm.get('age')?.hasError('required')) {
-            <small class="text-red-400">Invalid age</small>
+        <input type="text" placeholder="Age" formControlName="age">
+        @if(userForm.get('age')?.touched && userForm.get('age')?.hasError('age')) {
+            <small class="text-red-400"> Age is required</small>
         }
     </div>
-
-    <div class="flex gap-2">
-        <label for="isEmployee">Is user an Employee</label>
-        <input type="checkbox" name="isEmployee" id="isEmployee" formControlName="isEmployee">
+     <div >
+        <label for="isEmployee">isEmployee</label>
+        <input type="checkbox" name="isEmployee" id="isEmployee" formControlName="isEmployee" class="ml-2">
     </div>
 
-    <div class="flex gap-6">
-        <button class="cursor-pointer" type="submit">Submit</button>
-        <button class="cursor-pointer" (click)="loadData()">loadData</button>
+    <div class="flex gap-8">
+        <button type="submit">Submit</button>
+        <button (click)="loadData()">Load Data</button>
     </div>
-
 </form>
