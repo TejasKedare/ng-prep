@@ -2,27 +2,28 @@ import { Injectable } from "@angular/core";
 import { AsyncSubject, BehaviorSubject } from "rxjs";
 
 
-
 @Injectable({
-  providedIn: 'root'
+  'providedIn': 'root'
 })
 
 export class DataService {
-  behavioralSubject = new BehaviorSubject<boolean>(false)
-  behavioralSubjectData$ = this.behavioralSubject.asObservable()
+  constructor() { }
+
+  behaviorSubject = new BehaviorSubject<boolean>(false)
+  behaviorSubjectData$ = this.behaviorSubject.asObservable()
 
   asyncSubject = new AsyncSubject<string>()
-  asyncSubjectData$ = this.asyncSubject.asObservable()
+  asyncSubjectData = this.asyncSubject.asObservable()
 
-  setBehavioralSubjectValue(value: boolean) {
-    return this.behavioralSubject.next(value)
+  setBehaviorSubject(value: boolean) {
+    this.behaviorSubject.next(value)
   }
 
-  setAsyncSubjectValue(value: string){
-    return this.asyncSubject.next(value)
+  setAsyncSubject(value: string) {
+    this.asyncSubject.next(value)
   }
 
-  completeAsyncSubject(){
-    return this.asyncSubject.complete()
+  completeAsyncSubject() {
+    this.asyncSubject.complete()
   }
 }
