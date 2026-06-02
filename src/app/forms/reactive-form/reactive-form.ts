@@ -20,28 +20,47 @@ export class ReactiveForm implements OnInit {
 
   initializeForm() {
     this.userForm = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
-      age: ['', [Validators.required, Validators.min(18)]],
+      age: ['', [Validators.min(18)]],
       isEmployee: [false]
     })
+
+    this.addValidationBasedOnIsEmployed()
+  }
+
+  submitForm() {
+    if (!this.userForm.valid) {
+      this.userForm.markAllAsTouched()      
+      const err = this.findErrors() 
+      console.log("This is error submitting the form", err)
+      return
+    }
+
+    console.log('User From : ', this.userForm.value)
+  }
+
+  findErrors() {
+    let invalidFields = []
+    const controls = this.userForm.controls
+
+    for(let name in controls) {
+      if (controls[name].invalid) {
+        invalidFields.push({
+          name: name,
+          errors: controls[name].errors
+        })
+      }
+    }
+
+    return invalidFields
   }
 
   loadData() {
     this.userForm.patchValue({
-      name: 'Tejas',
-      age: 29
+      name: 'New name',
+      email: 'new@yopmail.com'
     })
-  }
-
-  submitForm() {
-    if (this.userForm.invalid) {
-      this.userForm.markAllAsTouched()
-      console.log('form has errors')
-      return
-    }
-
-    console.log(this.userForm.value);
   }
 
   addValidators() {
@@ -54,17 +73,16 @@ export class ReactiveForm implements OnInit {
     name?.updateValueAndValidity() // this is required in all update and delete part to refresh validators
   }
 
-  dynamicValidation() {
+  addValidationBasedOnIsEmployed() {
+    const age = this.userForm.get('age')
     this.userForm.get('isEmployee')?.valueChanges.subscribe((value) => {
-      const age = this.userForm.get('age')
       if (value) {
-        age?.setValidators([Validators.max(99)])
-        //  age?.markAllAsTouched()
+        age?.addValidators([Validators.max(99)])
       } else {
-        age?.clearValidators();
+        age?.clearValidators()
       }
-      age?.updateValueAndValidity()
 
+      age?.updateValueAndValidity()
     })
   }
 
