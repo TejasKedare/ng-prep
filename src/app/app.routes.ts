@@ -1,9 +1,10 @@
 import { Routes } from '@angular/router';
 import { UserListing } from './pages/user-listing/user-listing';
+import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
     { path: "", loadComponent: () => import('./pages/home/home').then(m => m.Home) },
-    { path: "listing", component: UserListing },
+    { path: "listing", canActivate:[authGuard], component: UserListing },
     { path: 'forms', loadChildren: () => import('../app/forms/forms.routes').then(m => m.FORM_ROUTES) },
     { path: "details/:id", loadComponent: () => import('./pages/user-details/user-details').then(m => m.UserDetails) },
     { path: "test-area", loadComponent: () => import('./pages/test-area/test-area').then(m => m.TestArea) },
